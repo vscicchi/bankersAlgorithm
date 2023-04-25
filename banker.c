@@ -48,7 +48,7 @@ int main() {
           }
         }
         if (flag = 0) { // If no unsafe detections in resources
-          ans[ind++] = i;
+          ans[ind++] = i; // Add process to the safe sequence (if full system will be safe at the end)
           for (y = 0; y < m; y++)
             avaliable[y] += alloc[i][y]; // The process returns its allocation to make them avaliable again
           finished[i] = 1; // The process has finished and its resources have been returned
@@ -56,4 +56,21 @@ int main() {
       }
     }
   }
+
+  // Determine if whole system isn't in a safe state
+  int flag = 1;
+  for (int i = 0; i < n; i++) {
+    if (f[i] == 0) { // If every process hasn't finished its execution, the system isn't safe
+      flag = 0;
+      printf("The System isn't in a Safe State!");
+      break;
+    }
+  }
+  if (flag == 1) { // If the whole system is safe
+    printf("Safe Sequence:\n");
+    for (int i = 0; i < n - 1; i++)
+      printf("P%d ->", ans[i]); // %d = ans[i]
+    printf(" P%d", ans[n - 1]); // Print last process in sequence
+  }
+  return(0);
 }
